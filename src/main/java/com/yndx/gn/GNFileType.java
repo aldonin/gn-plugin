@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 
 public class GNFileType extends LanguageFileType {
-    public static final GNFileType INSTANCE = new GNFileType();
+    static final GNFileType INSTANCE = new GNFileType();
 
     private GNFileType() {
         super(GNLanguage.INSTANCE);
