@@ -24,6 +24,5 @@ hs_err_pid*
 #IDE specific files
 .idea/*
 out
-*.iml
 .idea/
 out/
