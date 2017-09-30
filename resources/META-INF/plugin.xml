@@ -27,12 +27,12 @@
 
 
   <extensions defaultExtensionNs="com.intellij">
-    <!-- Add your extensions here -->
     <fileTypeFactory implementation="com.yndx.gn.GNFileTypeFactory"/>
+    <lang.commenter language="GN" implementationClass="com.yndx.gn.GNCommenter"/>
   </extensions>
 
   <actions>
-    <!-- Add your actions here -->
+
   </actions>
 
 </idea-plugin>
