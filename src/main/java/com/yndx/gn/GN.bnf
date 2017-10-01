@@ -1,0 +1,48 @@
+{
+    parserClass="com.yndx.gn.parser.GNParser"
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="GN"
+    psiImplClassSuffix="Impl"
+    psiPackage="com.yndx.gn.psi"
+    psiImplPackage="com.yndx.gn.psi.impl"
+
+
+    elementTypeHolderClass="com.yndx.gn.psi.GNTypes"
+    elementTypeClass="com.yndx.gn.psi.GNElementType"
+    tokenTypeClass="com.yndx.gn.psi.GNTokenType"
+
+    tokens = [
+        OPERATOR_ADDITION               = "+"
+        OPERATOR_ADDITION_ASSIGNMENT    = "+="
+        OPERATOR_SUBTRACTION            = "-"
+        OPERATOR_SUBTRACTION_ASSIGNMENT = "-="
+
+        OPERATOR_ASSIGNMENT             = "="
+        OPERATOR_EQUALITY               = "=="
+        OPERATOR_INEQUALITY             = "!="
+        OPERATOR_LESS_THAN              = "<"
+        OPERATOR_LESS_THAN_OR_EQUAL     = "<="
+        OPERATOR_GREATER_THAN           = ">"
+        OPERATOR_GREATER_THAN_OR_EQUAL  = ">="
+        OPERATOR_NOT                    = "!"
+        OPERATOR_AND                    = "&&"
+        OPERATOR_OR                     = "||"
+
+        BRACE_LEFT                      = "["
+        BRACE_RIGHT                     = "]"
+        CURLY_BRACE_LEFT                = "{"
+        CURLY_BRACE_RIGHT               = "}"
+        PARENTHESIS_LEFT                = "("
+        PARENTHESIS_RIGHT               = ")"
+
+        COMMA                           = ","
+        DOT                             = "."
+        INTEGER_LITERAL                 = "regexp:-?[1-9]\d*"
+        identifier                      = "regexp:[a-zA-Z_][a-zA-Z0-9_]*"
+    ]
+}
+
+gn_file ::= statement_list
+private statement_list ::= identifier | some_rule
+some_rule ::= COMMA identifier
