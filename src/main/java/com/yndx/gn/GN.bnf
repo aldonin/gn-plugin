@@ -40,9 +40,50 @@
         DOT                             = "."
         INTEGER_LITERAL                 = "regexp:-?[1-9]\d*"
         identifier                      = "regexp:[a-zA-Z_][a-zA-Z0-9_]*"
+        LINE_COMMENT                    = "regexp:#.*"
+        HEX                             = "regexp:0x[0-9A-Fa-f]{2}"
+        CHAR                            = "regexp:[^\n\r\$]*"
     ]
 }
 
 gn_file ::= statement_list
-private statement_list ::= identifier | some_rule
-some_rule ::= COMMA identifier
+
+private statement_list ::= { statement }
+private statement      ::= assignment | call | condition
+
+assignment  ::= l_value assignment_operator expression
+call        ::= identifier '(' [ expression_list ] ')' [ block ]
+condition   ::= 'if' '(' expression ')' block [ 'else' (condition | block) ]
+block       ::= '{' statement_list '}'
+l_value     ::= identifier | array_access | scope_access
+
+array_access ::= identifier '[' expression ']'
+scope_access ::= identifier '.' identifier
+
+expression_list     ::= expression { ',' expression }
+expression          ::= unary_expression | binary_expression
+unary_expression    ::= primary_expression | unary_group {extends = expression}
+unary_group         ::= unary_operator unary_expression { extends = unary_expression }
+binary_expression   ::= expression binary_operator expression { extends = expression }
+primary_expression  ::= identifier
+                      | INTEGER_LITERAL
+                      | string
+                      | call
+                      | array_access
+                      | scope_access | block
+                      | '(' expression ')'
+                      | '[' [ expression_list [ ',' ] ] ']'
+
+assignment_operator ::= '=' | '+=' | '-='
+unary_operator      ::= '!'
+binary_operator     ::= '+' | '-'               // highest priority
+                      | '<' | '<=' | '>' | '>='
+                      | '==' | '!='
+                      | '&&'
+                      | '||'                    // lowest priority
+
+string ::= '"' { CHAR | escape | expansion } '"'
+escape ::= '\' ( '$' | '"' | CHAR )
+expansion ::= '$' ( identifier | bracket_expansion | HEX )
+bracket_expansion ::= '{' ( identifier | array_access | scope_access ) '}'
+

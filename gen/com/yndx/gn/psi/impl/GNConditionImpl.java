@@ -11,14 +11,14 @@ import static com.yndx.gn.psi.GNTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.yndx.gn.psi.*;
 
-public class GNSomeRuleImpl extends ASTWrapperPsiElement implements GNSomeRule {
+public class GNConditionImpl extends ASTWrapperPsiElement implements GNCondition {
 
-  public GNSomeRuleImpl(ASTNode node) {
+  public GNConditionImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull GNVisitor visitor) {
-    visitor.visitSomeRule(this);
+    visitor.visitCondition(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -28,8 +28,20 @@ public class GNSomeRuleImpl extends ASTWrapperPsiElement implements GNSomeRule {
 
   @Override
   @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public List<GNBlock> getBlockList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, GNBlock.class);
+  }
+
+  @Override
+  @Nullable
+  public GNCondition getCondition() {
+    return findChildByClass(GNCondition.class);
+  }
+
+  @Override
+  @NotNull
+  public GNExpression getExpression() {
+    return findNotNullChildByClass(GNExpression.class);
   }
 
 }

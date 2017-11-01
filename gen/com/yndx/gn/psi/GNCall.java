@@ -5,7 +5,13 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface GNSomeRule extends PsiElement {
+public interface GNCall extends PsiElement {
+
+  @Nullable
+  GNBlock getBlock();
+
+  @Nullable
+  GNExpressionList getExpressionList();
 
   @NotNull
   PsiElement getIdentifier();
